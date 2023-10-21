@@ -1,3 +1,4 @@
+import plugin from 'tailwindcss/plugin';
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -18,7 +19,18 @@ module.exports = {
         sticky: '20',
         main: '0',
       },
+      animation: {
+        fadeUp: 'fadeUp 1.5s ease-in-out',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase, theme }): void {
+      addBase({
+        h1: { fontSize: theme('fontSize.3xl') },
+        h2: { fontSize: theme('fontSize.2xl') },
+        h3: { fontSize: theme('fontSize.xl') },
+      });
+    }),
+  ],
 };
