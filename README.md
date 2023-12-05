@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 프로젝트명
 
-## Getting Started
+- NextAuth를 사용해 로그인-로그아웃 api 연결, 회원 전역 상태관리 까지 구성된 프로젝트입니다.
+- Next.js로 프로젝트를 시작할 때 다시 세팅할 필요 없이 바로 보일러 플레이트를 제공합니다.
 
-First, run the development server:
+# 프로젝트 정보
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 참고한 소스
+
+```
+https://youtu.be/1SjqRn_Ira4?si=-ynF-u2mMFPRPz_w
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 로컬
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### localhost: 3000
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### env
 
-## Learn More
+```
+ NEXTAUTH_URL=http://localhost:3000/api/auth
+ NEXTAUTH_URL_INTERNAL=http://10.240.8.16
+ NEXTAUTH_SECRET="Z7KQh9uhohlhaRiKrn9Lac73MGV1oE85DJhYbWNjSBc="
+```
 
-To learn more about Next.js, take a look at the following resources:
+- 시크릿 키는 랜덤으로 생성된 openssl 키 이므로 추후 JWT토큰으로 변경이 필요합니다
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- NEXTAUTH_URL: 이 환경 변수는 프로덕션 환경에서 배포할 때 사이트의 정규 URL을 설정하는 데 사용됩니다. 이 URL은 NextAuth.js가 콜백 URL을 생성하거나 OAuth 공급자에 리디렉션을 요청할 때 사용됩니다. 이 값은 애플리케이션의 외부 URL이어야 합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- NEXTAUTH_URL_INTERNAL: 이 환경 변수는 서버 측 호출에 사용되며, 서버가 사이트의 정규 URL에 액세스할 수 없는 환경에서 유용합니다. 이 값은 애플리케이션의 내부 네트워크 URL이 될 수 있습니다. 이 값이 제공되지 않으면 NEXTAUTH_URL이 대신 사용됩니다.
 
-## Deploy on Vercel
+- 따라서, NEXTAUTH_URL은 외부에서 애플리케이션에 액세스하는 데 사용되는 URL이고, NEXTAUTH_URL_INTERNAL은 애플리케이션 내부에서 서버 간 통신에 사용되는 URL입니다1.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 외부 api 사용
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+# 없음
+```
+
+# Getting Started
+
+- local
+
+```
+- 아래 명령어로 리포지토리 클론 후 사용
+git clone --branch next-template https://github.com/nidevelop/project-templet.git
+- 클론 후 yarn 명령어 입력
+yarn dev (개발자모드)
+yarn build (프로젝트 빌드)
+yarn start (빌드된 프로젝트 실행)
+
+```
+
+- develop
+
+```
+# 실행시 필요한 명령어
+```
+
+- main
+
+```
+# 실행시 필요한 명령어
+
+```
+
+---

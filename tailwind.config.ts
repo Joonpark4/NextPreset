@@ -1,40 +1,90 @@
-import plugin from 'tailwindcss/plugin';
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
-      zIndex: {
-        modal: '50',
-        nav: '40',
-        object : '30',
-        sticky : '20',
-        semiObject: '10',
-        main: '0',
+    },
+    extend: {
+      colors: {
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      backgroundSize: {
+        "200%": "200%",
+        "300%": "300%",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
       },
       animation: {
-        MainTextAppear: 'MainTextAppear 1.5s ease-in-out',
-        'spin-slow': 'spin 450s linear infinite',
+        fadeIn: "fadeIn 800ms ease-in-out",
+        fadeOut: "fadeOut 800ms ease-in-out",
+        gradient: "gradient 500ms linear infinite",
+        gradientReverse: "gradientReverse 500ms linear infinite",
+        neon: "neon 2000ms ease-in-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [
-    plugin(function({ addBase, theme }) :void {
-      addBase({
-        'h1': { fontSize: theme('fontSize.3xl'), fontWeight: 'bold', margin: theme('margin.2') },
-        'h2': { fontSize: theme('fontSize.2xl'), fontWeight: 'bold', margin: theme('margin.2') },
-        'h3': { fontSize: theme('fontSize.xl'), fontWeight: 'bold', margin: theme('margin.2') },
-        'h4': { fontSize: theme('fontSize.lg'), fontWeight: 'bold', margin: theme('margin.2') },
-        'h5': { fontSize: theme('fontSize.base'), fontWeight:'bold', margin :theme ('margin.2')},
-        'h6': { fontSize :theme ('fontSize.sm'), fontWeight:'bold', margin :theme ('margin.2')}
-      })
-    })
-  ]
+  plugins: [require("tailwindcss-animate")],
 };
