@@ -1,5 +1,6 @@
 export interface ButtonProps {
   content: React.ReactNode;
+  type: "button" | "submit" | "reset" | undefined;
   width?: string;
   height?: string;
   props?: any;

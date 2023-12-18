@@ -1,47 +1,49 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
-import nextjs from "@/../public/img/nextjs-logotype-light-background.png";
-import BgPositionBtn from "../buttons/BgPositionBtn";
-import { useEffect, useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
-import InputLabel from "@/components/forms/InputLabel";
+'use client';
+import Link from 'next/link';
+import Image from 'next/image';
+import nextjs from '@/../public/img/nextjs-logotype-light-background.png';
+import { useEffect, useState } from 'react';
+import { useSession, signIn } from 'next-auth/react';
+import InputRHF from '@/components/forms/InputRHF';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/buttons/Button';
+import { Label } from "@/components/ui/label";
 
 export default function Login() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [isLogedin, setIsLogedin] = useState(false); // [TODO] 로그인 상태 확인하는 변수
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
 
-  const { data: session } = useSession(); // [TODO] 로그인 상태 확인하는 라이브러리 내장 함수
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  // [DONE] 로그인 상태 확인하는 변수 useSession은 프로바이더가 반드시 필요
-  // 로그인 관련 컴포넌트는 utils/SessionProvider.tsx에 있음
+  const { data: session } = useSession();
+
   useEffect(() => {
     console.log(session);
     if (session !== null && session !== undefined) {
-      setIsLogedin(true);
+      setIsLogin(true);
     } else {
-      setIsLogedin(false);
+      setIsLogin(false);
     }
   }, [session]);
 
-  async function handleLogin(e: any) {
-    e.preventDefault();
-    if (!isLogedin) {
-      const requestedEmail = email;
-      const requestedPassword = password;
-      await signIn("credentials", {
+  const onSubmit = (data: any) => {
+    console.log("로그인 시도:", data);
+    try {
+      signIn('credentials', {
         redirect: false,
-        requestedEmail,
-        requestedPassword,
+        requestedEmail: data.email,
+        requestedPassword: data.password,
       });
-    } else {
-      signOut();
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
-  if (isLogedin) {
+  if (isLogin) {
     return <div></div>;
   }
 
@@ -53,9 +55,7 @@ export default function Login() {
             <h1 className="text-3xl font-bold rounded-lg">Login</h1>
           </div>
           <h2 className="text-lg font-medium">
-            {isLogin
-              ? "Welcome! Pls login to your account."
-              : "Thank you for joining us!"}
+            Welcome! Pls login to your account.
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400">
             You can check the&nbsp;
@@ -65,32 +65,59 @@ export default function Login() {
             .
           </p>
         </div>
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex">
             <div className="flex flex-col grow gap-2">
-              <InputLabel
-                id="email"
-                type="text"
+              <InputRHF
+                type="email"
                 label="Email"
-                required
-                value={email}
-                onChange={(e: any) => setEmail(e.target.value)}
+                id="email"
+                watch={watch}
+                {...register('email', {
+                  required: '이메일을 입력해주세요!',
+                  minLength: {
+                    value: 4,
+                    message: '최소 4글자를 입력해주세요',
+                  },
+                  maxLength: {
+                    value: 15,
+                    message: '15글자를 초과할 수 없습니다',
+                  },
+                })}
               />
-              <InputLabel
-                id="password"
+              {errors?.email?.message && (
+                <Label className=" text-red-600">
+                  {errors?.email?.message as React.ReactNode}
+                </Label>
+              )}
+              <InputRHF
                 type="password"
                 label="Password"
-                required
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)}
+                watch={watch}
+                id="password"
+                {...register('password', {
+                  required: '비밀번호를 입력해주세요!',
+                  minLength: {
+                    value: 6,
+                    message: '최소 6글자를 입력해주세요',
+                  },
+                })}
               />
+              {errors?.password?.message && (
+                <Label className=" text-red-600">
+                  {errors?.password?.message as React.ReactNode}
+                </Label>
+              )}
             </div>
             <div className="flex flex-col justify-center items-center w-24 px-2">
-              <BgPositionBtn
-                content={isLogedin ? "Logout" : "Login"}
-                width="w-full"
-                height="h-full"
-              />
+              <Button
+                type="submit"
+                variant="outline"
+                size="sm"
+                className="w-full h-full mt-2"
+              >
+                Login
+              </Button>
             </div>
           </div>
           <div className="text-center">
@@ -104,40 +131,42 @@ export default function Login() {
             <span className="text-zinc-400 dark:text-zinc-300 text-sm">OR</span>
             <hr className="flex-grow border-zinc-200 dark:border-zinc-700" />
           </div>
-          <BgPositionBtn
-            content={
-              <div className="flex items-center justify-center">
-                <svg
-                  className=" w-5 h-5 mr-2"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" />
-                  <circle cx="12" cy="12" r="4" />
-                  <line x1="21.17" x2="12" y1="8" y2="8" />
-                  <line x1="3.95" x2="8.54" y1="6.06" y2="14" />
-                  <line x1="10.88" x2="15.46" y1="21.94" y2="14" />
-                </svg>
-                Login with Google
-              </div>
-            }
-            width="w-full"
-          />
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full h-full p-1"
+          >
+            <div className="flex items-center justify-center">
+              <svg
+                className=" w-5 h-5 mr-2"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="4" />
+                <line x1="21.17" x2="12" y1="8" y2="8" />
+                <line x1="3.95" x2="8.54" y1="6.06" y2="14" />
+                <line x1="10.88" x2="15.46" y1="21.94" y2="14" />
+              </svg>
+              Login with Google
+            </div>
+          </Button>
         </form>
         <div className="w-full flex justify-end items-center gap-2">
-          <div className="font-bold">Powered by</div>{" "}
+          <div className="font-bold">Powered by</div>{' '}
           <Image
             src={nextjs}
             alt="v0_logo"
             className="animate-neon"
             width={60}
-          />{" "}
+          />{' '}
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ https://youtu.be/1SjqRn_Ira4?si=-ynF-u2mMFPRPz_w
 ```
  NEXTAUTH_URL=http://localhost:3000/api/auth
  NEXTAUTH_URL_INTERNAL=http://10.240.8.16
- NEXTAUTH_SECRET="비~밀"
+ NEXTAUTH_SECRET="Z7KQh9uhohlhaRiKrn9Lac73MGV1oE85DJhYbWNjSBc="
 ```
 
 - 시크릿 키는 랜덤으로 생성된 openssl 키 이므로 추후 JWT토큰으로 변경이 필요합니다
