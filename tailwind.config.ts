@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import plugin from "tailwindcss/plugin";
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -86,5 +87,23 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ addBase, theme, addComponents }) {
+      addBase({
+        h1: {
+          fontSize: theme("fontSize.3xl"),
+          fontWeight: "bold",
+          margin: theme("margin.2"),
+        },
+      });
+      addComponents({
+        ".centered": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      });
+    }),
+  ],
 };
