@@ -1,9 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import nextjs from '@/../public/img/nextjs-logotype-light-background.png';
 import { useEffect, useState } from 'react';
-import { useSession, signIn } from 'next-auth/react';
 import InputRHF from '@/components/forms/InputRHF';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/buttons/Button';
@@ -18,30 +16,6 @@ export default function Login() {
     watch,
     formState: { errors },
   } = useForm();
-
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    console.log(session);
-    if (session !== null && session !== undefined) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, [session]);
-
-  const onSubmit = (data: any) => {
-    console.log("로그인 시도:", data);
-    try {
-      signIn('credentials', {
-        redirect: false,
-        requestedEmail: data.email,
-        requestedPassword: data.password,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   if (isLogin) {
     return <div></div>;
@@ -65,7 +39,7 @@ export default function Login() {
             .
           </p>
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4">
           <div className="flex">
             <div className="flex flex-col grow gap-2">
               <InputRHF
@@ -161,12 +135,6 @@ export default function Login() {
         </form>
         <div className="w-full flex justify-end items-center gap-2">
           <div className="font-bold">Powered by</div>{' '}
-          <Image
-            src={nextjs}
-            alt="v0_logo"
-            className="animate-neon"
-            width={60}
-          />{' '}
         </div>
       </div>
     </div>

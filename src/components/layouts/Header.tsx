@@ -1,14 +1,10 @@
 'use client'
 
 import React from "react";
-import { signOut } from 'next-auth/react';
 import HamBtn from "../ux/HamBtn";
 import Link from 'next/link';
 
 export default function Header() {
-	async function handleLogout() {
-    const result = await signOut();
-  }
 
   const menuList = [
     { label: "Home", to: "/" },
@@ -32,9 +28,6 @@ export default function Header() {
             {list.label}
           </Link>
         ))}
-        <button className="m-2 p-1 ring-1 ring-sky-400" onClick={handleLogout}>
-          Logout
-        </button>
         <HamBtn menuList={menuList} />
       </nav>
     </header>
