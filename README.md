@@ -42,12 +42,13 @@ https://youtu.be/1SjqRn_Ira4?si=-ynF-u2mMFPRPz_w
 - local
 
 ```
+- 때론 npm run dev 이후 브라우저 refesh를 한번 해야할 수 있음
 - 아래 명령어로 리포지토리 클론 후 사용
 git clone --branch next-template https://github.com/nidevelop/project-templet.git
 - 클론 후 yarn 명령어 입력
-yarn dev (개발자모드)
-yarn build (프로젝트 빌드)
-yarn start (빌드된 프로젝트 실행)
+npm run dev (개발자모드)
+npm run build (프로젝트 빌드)
+npm run start (빌드된 프로젝트 실행)
 
 ```
 
